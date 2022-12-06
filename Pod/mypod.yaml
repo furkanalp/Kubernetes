@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx-pod
+  labels:
+    app: nginx
+spec:
+  containers:
+    - name: mynginx
+      image: nginx
+      ports:
+        - containerPort: 80
+
+#  kubectl create -f mypod.yaml
+#  kubectl get pods -o wide   
+# kubectl describe pods/nginx-pod 
+# kubectl get pods/nginx-pod -o yaml
+
+#kubectl delete -f mypod.yaml or kubectl delete pod nginx-pod

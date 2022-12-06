@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-deployment
+  labels:
+    environment: dev
+spec:
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+        - name: nginx
+          image: nginx
+          ports:
+            - containerPort: 80
+  replicas: 3
+
+# kubectl apply -f mydeployment.yaml
+# kubectl get deployments
+# kubectl get pods -o wide
+# kubectl describe deploy/nginx-deployment
+# kubectl logs <pod-name>
+# kubectl exec <pod-name> -- cat /usr/share/nginx/html/index.html7
+# kubectl exec -it <pod-name> -- bash
+# kubectl scale deploy nginx-deployment --replicas=5
+# kubectl delete deployment nginx-deployment

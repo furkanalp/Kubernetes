@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: clarus-deploy
+  labels:
+    app: container-info
+  annotations:
+    kubernetes.io/change-cause: deploy/clarus-deploy is set as container-info=clarusway/clarus-info:1.0
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: container-info
+  template:
+    metadata:
+      labels:
+        app: container-info
+    spec:
+      containers:
+        - name: container-info
+          image: clarusway/clarus-info:1.0
+          ports:
+            - containerPort: 80
+
+# kubectl apply -f clarus-deploy.yaml
+# kubectl get deploy,rs,po -l app=container-info
+# kubectl describe deploy clarus-deploy
+# kubectl rollout history deploy clarus-deploy --revision=1
+# kubectl set image deploy clarus-deploy container-info=clarusway/container-info:2.0
+# kubectl rollout history deploy clarus-deploy --revision=2
+# kubectl get deploy,rs,po -l app=container-info
+# kubectl edit deploy/clarus-deploy (edit the objet)
+# kubectl rollout history deploy clarus-deploy --revision=3
+# kubectl rollout undo deploy clarus-deploy --to-revision=1
+# kubectl rollout history deploy clarus-deploy --revision=4
+# kubectl delete deploy -l app=container-info
