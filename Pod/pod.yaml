@@ -1,0 +1,25 @@
+apiVersion: v1
+
+kind: Pod
+
+metadata:
+  name: nginx
+  labels:
+    app: nginx
+    tier: frontend
+
+spec:
+  containers:
+    - name: nginx
+      image: nginx
+    - name: busybox
+      image: busybox
+
+# kubectl apply -f ./pod.yml
+# kubectl get pods     
+# kubectl describe pod nginx
+
+##### Create an NGINX Pod #####
+# kubectl run nginx --image=nginx
+##### Generate POD Manifest YAML file (-o yaml). Don't create it(--dry-run) #####
+# kubectl run nginx --image=nginx --dry-run=client -o yaml

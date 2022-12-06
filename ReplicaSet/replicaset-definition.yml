@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name:  myapp-replicaset
+  labels:
+    app: myapp
+    type: fronte-end
+
+spec:
+  template:
+    metadata:
+      name:  myapp-pod
+      labels:
+        app: myapp
+        type: front-end
+    spec:
+      containers:
+        - image:  nginx
+          name:  nginx-container
+  replicas: 3 # if we change the number of replicas ---> kubectl replace -f replicaset-definition.yml
+  selector:
+    matchLabels:
+      type: front-end
+
+# kubectl cerate -f replicaset-definition.yml
+# kubecttl get replicaset
+# kubectl describe replicaset myapp-replicaset
+# kubectl get pods
+# if you don't wanto to change the number of replicas directly from the yaml file, then use this commad ---> kubectl scale --replicas=6 -f replicaset-definition.yml  or kubectl scale --replicas=6 replicaset myapp-replicaset
+# kubectl delete replicaset myapp-replicaset  (Also deletes all underlying PODs)
+# kubectl edit rs myapp-replicaset

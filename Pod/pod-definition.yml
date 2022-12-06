@@ -1,0 +1,20 @@
+apiVersion: v1
+
+kind: Pod
+
+metadata:
+  name: myapp-pod
+  namespace: dev # you can specify a namespace here.
+  labels:
+    app: myapp
+    type: front-end
+
+spec:
+  containers:
+    - name: nginx-container
+      image: nginx
+
+
+# kubectl create -f ./pod-definition.yml
+# kubectl get pods
+# kubectl describe pod myapp-pod    

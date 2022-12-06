@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: httpd-frontend
+  labels:
+    app: newapp
+    type: front-end    
+    
+spec:
+  template:
+    metadata:
+      name: newapp-pod
+      labels:
+        app: newapp
+        type: front-end
+    spec:
+      containers:
+        - name: apachi-alpine
+          image: httpd:2.4-alpine
+  replicas: 3
+  selector:
+    matchLabels:
+      type: front-end
+
+## kubectl create deployment httpd-frontend --image=httpd:2.4-alpine --replicas=3      
