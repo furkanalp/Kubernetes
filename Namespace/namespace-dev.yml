@@ -7,8 +7,10 @@ metadata:
 # kubectl create -f namespace-dev.yml
 # kubectl create namespace dev
 # kubectl get pods --namespace=dev or kubectl get pods -n=dev
+# kubectl create deployment mikedeployment --image=nginx -n=clarus-namespace
 # kubectl get ns
 
 # kubectl config set-context $(kubectl config current-context) --namespace=dev   ---> permanantly changing namespace
 
 # kubectl get pods --all-namespaces or kubectl get pods -A
+# kubectl delete namespaces clarus-namespace
