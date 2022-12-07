@@ -27,6 +27,7 @@ spec:
 # kubectl describe deploy clarus-deploy
 # kubectl rollout history deploy clarus-deploy --revision=1
 # kubectl set image deploy clarus-deploy container-info=clarusway/container-info:2.0
+# kubectl annotate -f clarus-deploy.yaml --overwrite kubernetes.io/change-cause="deploy/clarus-deploy is set as container-info=clarusway/container-info:2.0"
 # kubectl rollout history deploy clarus-deploy --revision=2
 # kubectl get deploy,rs,po -l app=container-info
 # kubectl edit deploy/clarus-deploy (edit the objet)
