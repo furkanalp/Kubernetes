@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: myclaim
+spec:
+  resources:
+    requests:
+      storage: 500Mi
+  accessModes:
+    - ReadWriteOnce
+
+# kubectl get pvc
+# kubectl delete pvc myclaim
+# persistentVolumeReclaimPolicy: Recycle, Retain, Delete
