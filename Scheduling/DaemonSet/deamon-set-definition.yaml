@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: monitoring-daemon
+spec:
+  selector:
+    matchLabels:
+      app: monitoring-agent
+  template:
+    metadata:
+      labels:
+        app: monitoring-agent
+    spec:
+      containers:
+        - name: monitoring-agent
+          image:  monitoring-agent         
+
+# kubectl create -f daemon-set-definition.yaml
+# kubectl get daemonsets
+# kubectl describe daemonsets monitoring-daemon
+# kubectl describe ds kube-flannel-ds -n kube-system

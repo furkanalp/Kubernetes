@@ -1,0 +1,14 @@
+# kubectl label nodes node01 size=Large
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: myapp-pod
+spec:
+  containers:
+  - name: nginx
+    image: nginx
+  nodeSelector:
+    size: Large  
+
+
