@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mydb
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: mydb
+  template:
+    metadata:
+      labels:
+        app: mydb
+    spec:
+      containers:
+      - name: mydb
+        image: mysql:5.7
+        resources:
+        ports:
+        - containerPort: 3306
+        envFrom:
+          - secretRef:
+              name: mysecret
+        volumeMounts:
+          - mountPath: "/var/lib/mysql"
+            name: mystorage
+          - name: first-table
+            mountPath: /docker-entrypoint-initdb.d
+      volumes:
+        - name: mystorage
+          persistentVolumeClaim:
+            claimName: mypvc
+        - name: first-table
+          configMap:
+            name: myconfigmap
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mycluster
+spec:
+  type: ClusterIP 
+  selector:
+    app: myapp
+  ports:
+  - port: 3306
+    targetPort: 3306
+                        
