@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: auth-gateway
+  namespace: beebox-auth
+spec:
+  nodeSelector:
+    external-auth-services: "true"
+  containers:
+  - name: nginx
+    image: nginx:1.19.1
+    ports:
+    - containerPort: 80
+
+# kubectl label nodes k8s-worker2 external-auth-services=true
+# kubectl apply -f auth-gateway.yaml    
