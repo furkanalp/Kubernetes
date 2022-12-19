@@ -1,0 +1,42 @@
+# kubectl get no
+# kubectl describe node kube-master | grep -i taint
+# kubectl describe node kube-worker-1 | grep -i taint
+
+#  kubectl taint nodes kube-worker-1 clarus=way:NoSchedule  (tainted)
+#  kubectl describe node kube-worker-1 | grep -i taint  (check the taint on that)
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-deployment
+  labels:
+    environment: dev
+spec:
+  replicas: 15
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+      - name: nginx
+        image: nginx
+        ports:
+        - containerPort: 80
+        resources:
+      tolerations:
+        - key: "clarus"
+          operator: "Equal"
+          value: "way"
+          effect: "NoSchedule"
+      # or
+      # tolerations:
+      #   - key: "clarus"
+      #     operator: "Exists"
+      #     effect: "NoSchedule"
+
+
+# kubectl taint nodes kube-worker-1 clarus=way:noSchedule- (for untainting)      
