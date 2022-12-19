@@ -1,0 +1,31 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: web-auth-svc
+spec:
+  type: ClusterIP
+  selector:
+    app: web-auth
+  ports:
+    - name: http
+      protocol: TCP
+      port: 80
+      targetPort: 80
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: web-auth-ingress
+spec:
+  rules:
+  - http:
+      paths:
+      - path: /auth
+        pathType: Prefix
+        backend:
+          service:
+            name: web-auth-svc
+            port:
+              number: 80    
+
+# kubectl describe ingress web-auth-ingress                
