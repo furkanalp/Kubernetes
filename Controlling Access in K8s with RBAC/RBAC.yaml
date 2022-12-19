@@ -1,0 +1,28 @@
+#kubectl get pods -n beebox-mobile --kubeconfig dev-k8s-config  (no access)
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  namespace: beebox-mobile
+  name: pod-reader
+rules:
+ - apiGroups: [""] # "" indicates the core API group
+   resources: ["pods","pods/log"]
+   verbs: ["get", "watch", "list"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: read-pods
+  namespace: beebox-mobile
+subjects:
+- kind: User
+  name: dev
+  apiGroup: rbac.authorization.k8s.io
+roleRef:
+  kind: Role
+  name: pod-reader
+  apiGroup: rbac.authorization.k8s.io
+
+# kubectl apply -f .
+# #kubectl get pods -n beebox-mobile --kubeconfig dev-k8s-config  (now we have access for dev user)  
