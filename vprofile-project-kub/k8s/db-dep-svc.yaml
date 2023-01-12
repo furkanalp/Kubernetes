@@ -1,0 +1,56 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: vprodb
+  labels:
+    app: vprodb
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: vprodb
+  template:
+    metadata:
+      labels:
+        app: vprodb
+    spec:
+      containers:
+      - name: vprodb
+        image: furkanalp/vprofiledb
+        # args:
+        #   - "--ignore-db-dir=lost+found"
+        resources:
+        ports:
+        - containerPort: 3306
+        env:
+        - name: MYSQL_ROOT_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: app-secret
+              key: db-password
+        volumeMounts:
+          - mountPath: /var/lib/mysql
+            name: db-volume
+      # nodeSelector:
+      #   zone: us-east-1a
+      # volumes:
+      #   - name: db-volume
+      #     awsElasticBlockStore:
+      #       volumeID: xxxxxxxxx # give the ID of EBS you created and when you are creating your EBS volume don't forget to give Tag, value should be same as your cluster name.
+      #       fsType: ext4    
+      volumes:
+        - name: db-volume
+          persistentVolumeClaim:
+            claimName: db-pvc
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: vprodb
+spec:
+  type: ClusterIP
+  selector:
+    app: vprodb
+  ports:
+  - port: 3306
+    targetPort: 3306
